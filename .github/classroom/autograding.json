@@ -1,0 +1,84 @@
+{
+  "tests": [
+    {
+      "name": "constructorTest",
+      "setup": "",
+      "run": "gradle test --tests \"InstructorTileManagerTest.constructorTest\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "addTileTest",
+      "setup": "",
+      "run": "gradle test --tests \"InstructorTileManagerTest.addTileTest\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "raiseTest",
+      "setup": "",
+      "run": "gradle test --tests \"InstructorTileManagerTest.raiseTest\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "lowerTest",
+      "setup": "",
+      "run": "gradle test --tests \"InstructorTileManagerTest.lowerTest\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "deleteTest",
+      "setup": "",
+      "run": "gradle test --tests \"InstructorTileManagerTest.deleteTest\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "deleteAllTest",
+      "setup": "",
+      "run": "gradle test --tests \"InstructorTileManagerTest.deleteAllTest\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "listShuffledTest",
+      "setup": "",
+      "run": "gradle test --tests \"InstructorTileManagerTest.listShuffledTest\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "shuffleChangesPositionWithinBoundsTest",
+      "setup": "",
+      "run": "gradle test --tests \"InstructorTileManagerTest.shuffleChangesPositionWithinBoundsTest\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    }
+  ]
+}
