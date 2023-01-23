@@ -1,11 +1,17 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.awt.*;
-import java.util.Random;
+import java.util.List;
 
 /**
- * Add your own comments here
+ * Created by: Kay Karman (754506)
+ * Date: Jan. 23rd, 2023
+ * Class: EGR326, Section A
+ * Professor Hudnall
+ *
+ * Homework #1: Tiles
+ *
+ * This program develops all methods and behaviors for the Tile program, including
+ * various methods of moving the tiles and deleteing them
  */
 public class TileManager {
     private List<Tile> tiles; //DO NOT MODIFY THIS LINE
@@ -32,7 +38,7 @@ public class TileManager {
     }
 
     /**
-     * Draws all tiles on the screen from bottom to top
+     * Draws all tiles on the screen from bottom (beginning) to top (end)
      * @param g graphical pen to draw tiles
      */
     public void drawAll(Graphics g) {
@@ -42,66 +48,67 @@ public class TileManager {
     }
 
     /**
-     * If the (x,y) coordinates are contained by a Tile, the topmost Tile
-     * should be moved to the end of the list
-     * @param x X-coordinate of user click
-     * @param y Y-coordinate of user click
-     */
-    public void raise(int x, int y) {
-        Boolean isTopmost = false;
-        for (int i = tiles.size() - 1; i >= 0; i--) {
-            Tile currTile = tiles.get(i);
-            if (containsClick(i, x, y) && !isTopmost) {
-                isTopmost = true;
-                tiles.add(currTile);
-                tiles.remove(i);
-            }
-        }
-    }
-
-    /**
-     * If the (x,y) coordinates are contained by a Tile, the topmost Tile
+     * If the (x,y) coordinates of a user-left click are contained by a Tile, the topmost Tile
      * should be moved to the beginning of the list
      * @param x X-coordinate of user click
      * @param y Y-coordinate of user click
      */
-    public void lower(int x, int y) {
-        Boolean isTopmost = false;
-        for (int i = tiles.size() - 1; i >= 0; i--) {
-            Tile currTile = tiles.get(i);
-            if (containsClick(i, x, y) && !isTopmost) {
-                isTopmost = true;
-                tiles.add(0, currTile);
-                tiles.remove(i + 1);
+    public void raise(int x, int y) {
+        ListIterator listIterator = tiles.listIterator(tiles.size());
+        while (listIterator.hasPrevious()) {
+            Tile currTile = (Tile) listIterator.previous();
+            if (containsClick(currTile, x, y)) {
+                tiles.add(currTile);
+                tiles.remove(listIterator.previousIndex() + 1);
+                break;
             }
         }
     }
 
     /**
-     * If the (x,y) coordinates are contained by a Tile, the topmost Tile
-     * should be deleted
+     * If the (x,y) coordinates of a user shift-left-click are contained by a Tile,
+     * the topmost Tile should be moved to the beginning of the list
+     * @param x X-coordinate of user click
+     * @param y Y-coordinate of user click
+     */
+    public void lower(int x, int y) {
+        ListIterator listIterator = tiles.listIterator(tiles.size());
+        while (listIterator.hasPrevious()) {
+            Tile currTile = (Tile) listIterator.previous();
+            if (containsClick(currTile, x, y)) {
+                tiles.add(0, currTile);
+                tiles.remove(listIterator.nextIndex() + 1);
+                break;
+            }
+        }
+    }
+
+    /**
+     * If the (x,y) coordinates of a user right-click are contained by a Tile,
+     * the topmost Tile should be deleted
      * @param x X-coordinate of user click
      * @param y Y-coordinate of user click
      */
     public void delete(int x, int y) {
-        Boolean isTopmost = false;
-        for (int i = tiles.size() - 1; i >= 0; i--) {
-            if (containsClick(i, x, y) && !isTopmost) {
-                tiles.remove(i);
-                isTopmost = true;
+        ListIterator listIterator = tiles.listIterator(tiles.size());
+        while (listIterator.hasPrevious()) {
+            Tile currTile = (Tile) listIterator.previous();
+            if (containsClick(currTile, x, y)) {
+                listIterator.remove();
+                break;
             }
         }
     }
 
     /**
-     * If the (x,y) coordinates is contained by any Tile, the Tile(s)
-     * should be deleted
+     * If the (x,y) coordinates of a user shift-right-click is contained by any Tile,
+     * the Tile(s) should be deleted
      * @param x X-coordinate of user click
      * @param y Y-coordinate of user click
      */
     public void deleteAll(int x, int y) {
         for (int i = tiles.size() - 1; i >= 0; i--) {
-            if (containsClick(i, x, y)) {
+            if (containsClick(tiles.get(i), x, y)) {
                 tiles.remove(i);
             }
         }
@@ -109,8 +116,8 @@ public class TileManager {
 
     /**
      * Reorders the tiles in the list randomly and moves every Tile
-     * to a new (x,y) position.
-     * (x,y) positions should be non-negative
+     * to a new (x,y) position that are within the boundaries of the passed parameters.
+     * (x,y) positions should be non-negative.
      * @param width is the width of pixel area
      * @param height is the height of the pixel area
      */
@@ -134,23 +141,25 @@ public class TileManager {
     //Helper Methods
 
     /**
-     * Determines if the current tile contains the passed (x,y) values
-     * @param i is the index of the current Tile
+     * Helper method that determines if a user's click is contained in a Tile
+     * @param t is the index of the current Tile
      * @param x X-coordinate of user click
      * @param y Y-coordinate of user click
      */
-    public Boolean containsClick(int i, int x, int y) {
-        Tile currTile = tiles.get(i);
+    public Boolean containsClick(Tile t, int x, int y) {
+        Tile currTile = t;
 
-        //Contained in the area
+        //Area bounds
         Boolean isInXAxis = (currTile.getX() <= x && currTile.getX() + currTile.getWidth() >= x);
         Boolean isInYAxis = (currTile.getY() <= y && currTile.getY() + currTile.getHeight() >= y);
 
+        //Is contained in area
         if (isInXAxis && isInYAxis) {
             return true;
         }
         return false;
     }
+
 
     //*** FOR TESTING PURPOSE ONLY ****//
     //SHOULD USE THIS METHOD ONLY IN J-UNIT TEST CODE
